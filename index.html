@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apex Adventure | Professional Outdoor Systems</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS CDN (已修复格式) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
+    <!-- Lucide Icons (已修复格式) -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- External CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#fafafa] text-gray-900 leading-relaxed">
-
-    <!-- MANDATORY EDUCATIONAL DISCLAIMER -->
+ <!-- MANDATORY EDUCATIONAL DISCLAIMER -->
     <div class="bg-emerald-950 text-white text-center py-2 px-4 text-[9px] font-black uppercase tracking-[0.3em] sticky top-0 z-[100] border-b border-emerald-800">
         Academic Project: 6751YCOM — Educational Purpose Only — No Real Transactions
     </div>
@@ -34,11 +32,8 @@
                 </div>
                 
                 <!-- Desktop Navigation -->
-               <!-- 桌面端导航链接 (替换这一整块) -->
                 <div class="hidden lg:flex items-center space-x-10 text-[11px] font-extrabold tracking-widest">
                     <span id="nav-home" onclick="showView('home')" class="nav-link text-gray-900 uppercase">Home</span>
-                    <span id="nav-hiking" onclick="showView('hiking')" class="nav-link text-gray-400 hover:text-emerald-600 uppercase">Hiking</span>
-                    <span id="nav-camping" onclick="showView('camping')" class="nav-link text-gray-400 hover:text-emerald-600 uppercase">Camping</span>
                     <span id="nav-story" onclick="showView('story')" class="nav-link text-gray-400 hover:text-emerald-600 uppercase">Our Story</span>
                 </div>
 
@@ -84,8 +79,7 @@
                 <h4 class="font-black mb-8 text-[11px] uppercase tracking-[0.3em] text-emerald-500">Navigation</h4>
                 <ul class="text-gray-400 space-y-4 text-sm font-bold">
                     <li onclick="showView('home')" class="cursor-pointer hover:text-white transition">Home</li>
-                    <li onclick="showView('hiking')" class="cursor-pointer hover:text-white transition">Hiking Gear</li>
-                    <li onclick="showView('camping')" class="cursor-pointer hover:text-white transition">Basecamp</li>
+                    <li onclick="showView('home')" class="cursor-pointer hover:text-white transition">All Gear</li>
                     <li onclick="showView('story')" class="cursor-pointer hover:text-white transition">Our Story</li>
                 </ul>
             </div>

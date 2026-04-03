@@ -5,25 +5,20 @@ const products = [
     { id: 4, name: "Ti-Lite Survival Stove", price: 120, category: "Camping", img: "images/stove.jpg", desc: "The world's lightest titanium multi-fuel stove.", specs: "Weight: 45g | Boil Time: 3.2min | Fuel: Gas/Liquid" },
     { id: 7, name: "Lumina Basecamp Lantern", price: 150, category: "Camping", img: "images/lantern.jpg", desc: "1000-lumen rechargeable LED lantern with power bank feature.", specs: "Battery: 10,000mAh | Runtime: 48h | IPX6 Water Resistant" },
     { id: 8, name: "Aero-Mat Sleeping Pad", price: 210, category: "Camping", img: "images/pad.jpg", desc: "Self-inflating memory foam core for ultimate off-grid comfort.", specs: "Thickness: 7cm | R-Value: 4.5 | Pack Size: 20x15cm" },
-
-    // === HIKING CATEGORY ===
-    { id: 2, name: "Vortex 65L Trekking Pack", price: 450, category: "Hiking", img: "images/bag.jpg", desc: "Advanced load-distribution system with breathable mesh back.", specs: "Volume: 65L | Material: 600D Nylon | Features: Hydration Ready" },
-    { id: 5, name: "Alpha Carbon Poles", price: 199, category: "Hiking", img: "images/pole.jpg", desc: "Dual-locking carbon fiber poles for terrain mastery.", specs: "Weight: 180g each | Extended: 135cm | Grip: High-density EVA" },
-    { id: 9, name: "Hydra-Flow Reservoir", price: 85, category: "Hiking", img: "images/reservoir.png", desc: "3L leak-proof hydration bladder with high-flow bite valve.", specs: "Capacity: 3L | BPA-Free | Tube Length: 90cm" },
-    { id: 10, name: "Trail-Blazer GPS Watch", price: 1250, category: "Hiking", img: "images/watch.jpg", desc: "Solar-powered tactical smartwatch with topographical maps.", specs: "Battery: 30 days (Solar) | GPS Accuracy: Multi-band GNSS" },
-    { id: 11, name: "Titanium Compass PRO", price: 145, category: "Hiking", img: "images/compass.jpg", desc: "Military-grade liquid-filled compass with clinometer.", specs: "Material: Titanium Alloy | Accuracy: ±0.5° | Luminous: Yes" }
+    { id: 12, name: "Titanium Cookset", price: 195, category: "Camping", img: "images/cookset.jpg", desc: "Ultralight nesting pot and pan set for backcountry gourmets.", specs: "Weight: 220g | Material: Titanium | Includes: 1L Pot, Pan" }
 ];
 
 let cart = JSON.parse(localStorage.getItem('apex_cart')) || [];
 let currentSearchQuery = "";
+let currentSort = "default";
 
 // --- NAVIGATION ---
 function showView(view) {
     const main = document.getElementById('main-content');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    // 动态更新导航栏文字颜色 (Active State - 之前修复的)
-    const navItems = ['home', 'hiking', 'camping', 'story'];
+    // Dynamic Active State
+    const navItems = ['home', 'story'];
     navItems.forEach(item => {
         const el = document.getElementById('nav-' + item);
         if (el) {
@@ -38,8 +33,6 @@ function showView(view) {
     });
     
     if (view === 'home') renderHome();
-    else if (view === 'hiking') renderCategory('Hiking', 'Peak Conquest', 'High-altitude hiking systems.');
-    else if (view === 'camping') renderCategory('Camping', 'Off-Grid Living', 'Premium shelter and basecamp tools.');
     else if (view === 'story') renderStory();
     else if (view === 'checkout') renderCheckout();
     
@@ -47,11 +40,33 @@ function showView(view) {
     updateCartUI();
 }
 
+function getSortedProducts() {
+    let sorted = [...products];
+    if (currentSearchQuery) {
+        sorted = sorted.filter(p => p.name.toLowerCase().includes(currentSearchQuery));
+    }
+    if (currentSort === 'price-asc') {
+        sorted.sort((a, b) => a.price - b.price);
+    } else if (currentSort === 'price-desc') {
+        sorted.sort((a, b) => b.price - a.price);
+    }
+    return sorted;
+}
+
+function handleSort(val) {
+    currentSort = val;
+    const grid = document.getElementById('product-grid');
+    if (grid) {
+        grid.innerHTML = renderProductList(getSortedProducts());
+        lucide.createIcons();
+    }
+}
+
 function handleSearch(val) {
     currentSearchQuery = val.toLowerCase();
     const grid = document.getElementById('product-grid');
     if (grid) {
-        grid.innerHTML = renderProductList(products.filter(p => p.name.toLowerCase().includes(currentSearchQuery)));
+        grid.innerHTML = renderProductList(getSortedProducts());
         lucide.createIcons();
     }
 }
@@ -60,7 +75,8 @@ function handleSearch(val) {
 function renderHome() {
     document.getElementById('main-content').innerHTML = `
         <section class="relative bg-gray-950 h-[700px] flex items-center overflow-hidden animate-view">
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1350&q=80')] bg-cover bg-center opacity-40 scale-110"></div>
+            <!-- 高质量的野外露营、帐篷与森林背景照片 -->
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1504280390467-336c1e345f08?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-40 scale-110"></div>
             <div class="max-w-7xl mx-auto px-4 relative z-10 text-white">
                 <div class="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/30 px-5 py-2 rounded-full mb-8 backdrop-blur-md">
                     <span class="text-emerald-400 text-[10px] font-black uppercase tracking-[0.4em]">2026 Collection Live</span>
@@ -68,37 +84,32 @@ function renderHome() {
                 <h1 class="text-7xl md:text-[9rem] font-black mb-10 leading-[0.85] tracking-tighter uppercase">The<br><span class="text-emerald-500">Apex</span> Way.</h1>
                 <p class="text-xl mb-12 max-w-xl text-gray-400 font-medium uppercase tracking-widest leading-relaxed">Defining the next era of wilderness survival and exploration.</p>
                 <div class="flex gap-6">
-                    <button onclick="showView('hiking')" class="bg-emerald-500 text-gray-950 px-12 py-6 rounded-[2rem] font-black uppercase tracking-widest text-xs shadow-2xl shadow-emerald-500/40 hover:scale-105 transition">Catalog</button>
+                    <button onclick="document.getElementById('gear-section').scrollIntoView({behavior: 'smooth'})" class="bg-emerald-500 text-gray-950 px-12 py-6 rounded-[2rem] font-black uppercase tracking-widest text-xs shadow-2xl shadow-emerald-500/40 hover:scale-105 transition">Shop Camping Gear</button>
                     <button onclick="showView('story')" class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-12 py-6 rounded-[2rem] font-black uppercase tracking-widest text-xs hover:bg-white/20 transition">Our Ethos</button>
                 </div>
             </div>
         </section>
-        <div class="max-w-7xl mx-auto px-4 py-32">
-            <div class="flex justify-between items-end mb-16">
+        <div id="gear-section" class="max-w-7xl mx-auto px-4 py-32">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
                 <div>
-                    <h2 class="text-5xl font-black uppercase tracking-tighter mb-4">Core Essentials</h2>
-                    <p class="text-gray-400 font-bold uppercase tracking-widest text-xs">Battle-tested gear for global terrains</p>
+                    <h2 class="text-5xl font-black uppercase tracking-tighter mb-4">Basecamp Essentials</h2>
+                    <p class="text-gray-400 font-bold uppercase tracking-widest text-xs">Battle-tested camping gear for global terrains</p>
+                </div>
+                
+                <!-- Sort Dropdown -->
+                <div class="flex items-center gap-3">
+                    <i data-lucide="arrow-up-down" class="w-4 h-4 text-gray-400"></i>
+                    <select onchange="handleSort(this.value)" class="bg-white border border-gray-200 text-gray-700 text-xs font-bold uppercase tracking-widest rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
+                        <option value="default" ${currentSort === 'default' ? 'selected' : ''}>Featured</option>
+                        <option value="price-asc" ${currentSort === 'price-asc' ? 'selected' : ''}>Price: Low to High</option>
+                        <option value="price-desc" ${currentSort === 'price-desc' ? 'selected' : ''}>Price: High to Low</option>
+                    </select>
                 </div>
             </div>
-           <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-12">
-           ${renderProductList(products.slice(0, 6))}
-           </div>
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        ${renderProductList(getSortedProducts())}
         </div>
-    `;
-}
-
-function renderCategory(cat, title, subtitle) {
-    const filtered = products.filter(p => p.category === cat);
-    document.getElementById('main-content').innerHTML = `
-        <header class="bg-gray-900 pt-48 pb-24 px-4 text-center text-white relative">
-            <h2 class="text-6xl font-black uppercase tracking-tighter mb-4 animate-view">${title}</h2>
-            <p class="text-emerald-500 font-black uppercase tracking-[0.5em] text-xs">${subtitle}</p>
-        </header>
-        <section class="max-w-7xl mx-auto px-4 py-24">
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                ${renderProductList(filtered)}
-            </div>
-        </section>
+        </div>
     `;
 }
 
@@ -132,7 +143,6 @@ function renderProductList(list) {
     return list.map(p => `
         <div class="product-card group bg-white rounded-[2.5rem] border border-gray-100 p-8 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-700">
             <div onclick="openProductDetail(${p.id})" class="cursor-pointer aspect-square bg-[#f8f8f8] rounded-[2rem] mb-8 flex items-center justify-center shadow-inner overflow-hidden relative">
-                <!-- 🌟 这里改成了真实的 img 标签 -->
                 <img src="${p.img}" alt="${p.name}" class="product-img w-full h-full object-contain p-6 transition-transform duration-700" onerror="this.src='https://via.placeholder.com/400?text=No+Image'">
                 <div class="absolute inset-0 bg-emerald-600/0 group-hover:bg-emerald-600/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 duration-500">
                     <span class="bg-white text-gray-900 text-[10px] font-black px-6 py-3 rounded-full shadow-xl uppercase tracking-widest">View Details</span>
@@ -156,6 +166,7 @@ function toggleCart() {
     panel.classList.toggle('translate-x-full');
     overlay.classList.toggle('opacity-0');
     overlay.classList.toggle('pointer-events-none');
+    overlay.classList.toggle('pointer-events-auto'); // 开启背景层的防点击穿透拦截
     document.body.style.overflow = isClosing ? 'auto' : 'hidden';
 }
 
@@ -193,7 +204,6 @@ function updateCartUI() {
         return `
         <div class="flex items-center gap-6 bg-[#fcfcfc] p-6 rounded-[2rem] border border-gray-100">
             <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-sm overflow-hidden p-2">
-                <!-- 🌟 这里改成了真实的 img 标签 -->
                 <img src="${item.img}" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/100'">
             </div>
             <div class="flex-1">
@@ -254,7 +264,6 @@ function openProductDetail(id) {
     content.innerHTML = `
         <div class="flex flex-col md:flex-row h-full">
             <div class="md:w-1/2 bg-[#f8f8f8] flex items-center justify-center p-10 md:p-20 min-h-[300px] md:min-h-[500px]">
-                <!-- 🌟 这里改成了真实的 img 标签 -->
                 <img src="${p.img}" alt="${p.name}" class="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/600'">
             </div>
             <div class="md:w-1/2 p-10 md:p-16 flex flex-col justify-center">
@@ -337,7 +346,11 @@ function simPayment() {
     const btn = document.getElementById('pay-btn');
     const fname = document.getElementById('fname').value;
     if(!fname) {
-        alert("Please enter deployment details first.");
+        const toast = document.createElement('div');
+        toast.className = "fixed bottom-10 right-10 z-[200] bg-red-900 text-white px-8 py-5 rounded-3xl shadow-2xl font-black text-[10px] tracking-widest uppercase animate-view";
+        toast.innerHTML = `<span class="text-red-400">Error:</span> Please enter deployment details first.`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2500);
         return;
     }
     btn.innerHTML = `<i data-lucide="loader-2" class="w-5 h-5 animate-spin mx-auto"></i>`;

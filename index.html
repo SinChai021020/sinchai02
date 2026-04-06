@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apex Adventure | Professional Outdoor Systems</title>
-    <!-- Tailwind CSS CDN (已修复格式) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons (已修复格式) -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- External CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
- <!-- MANDATORY EDUCATIONAL DISCLAIMER -->
+ 
     <div class="bg-emerald-950 text-white text-center py-2 px-4 text-[9px] font-black uppercase tracking-[0.3em] sticky top-0 z-[100] border-b border-emerald-800">
         Academic Project: 6751YCOM — Educational Purpose Only — No Real Transactions
     </div>
 
-    <!-- Enhanced Navigation Bar -->
     <nav id="navbar" class="glass-nav sticky top-[33px] z-[90] py-5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
@@ -31,13 +27,13 @@
                     </div>
                 </div>
                 
-                <!-- Desktop Navigation -->
+                
                 <div class="hidden lg:flex items-center space-x-10 text-[11px] font-extrabold tracking-widest">
                     <span id="nav-home" onclick="showView('home')" class="nav-link text-gray-900 uppercase">Home</span>
                     <span id="nav-story" onclick="showView('story')" class="nav-link text-gray-400 hover:text-emerald-600 uppercase">Our Story</span>
                 </div>
 
-                <!-- Action Group -->
+               
                 <div class="flex items-center space-x-3">
                     <div class="hidden sm:flex items-center bg-gray-100 rounded-full px-4 py-2 border border-transparent focus-within:border-emerald-500/50 focus-within:bg-white transition-all">
                         <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
@@ -59,7 +55,6 @@
 
     <main id="main-content" class="min-h-screen"></main>
 
-    <!-- Professional Footer -->
     <footer class="bg-gray-950 text-white pt-24 pb-12">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-16">
             <div class="col-span-1 md:col-span-2">
@@ -97,7 +92,6 @@
         </div>
     </footer>
 
-    <!-- Cart Sidebar -->
     <div id="cart-sidebar" class="fixed inset-0 z-[110] pointer-events-none">
         <div id="cart-overlay" onclick="toggleCart()" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity pointer-events-none duration-500"></div>
         <div id="cart-panel" class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl translate-x-full cart-transition pointer-events-auto flex flex-col">
@@ -119,15 +113,11 @@
         </div>
     </div>
 
-    <!-- Modal (Login / Details) -->
     <div id="modal-container" class="fixed inset-0 z-[120] hidden items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-md" onclick="closeModal()"></div>
         <div id="modal-content" class="relative bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden animate-view">
-            <!-- Dynamic Content Injected Here -->
         </div>
     </div>
-
-    <!-- External Script -->
     <script src="script.js"></script>
 </body>
 </html>

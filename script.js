@@ -147,7 +147,7 @@ function renderBlog() {
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 group cursor-pointer">
                         <div class="h-64 bg-gray-200 overflow-hidden relative">
-                            <img src="[https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=800&q=80](https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=800&q=80)" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <img src="images/blogbeg.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         </div>
                         <div class="p-8">
                             <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-4 py-1.5 rounded-full mb-4 inline-block">Gear Guide</span>
@@ -158,7 +158,7 @@ function renderBlog() {
                     </div>
                     <div class="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 group cursor-pointer">
                         <div class="h-64 bg-gray-200 overflow-hidden relative">
-                            <img src="[https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800&q=80](https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800&q=80)" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <img src="images/campingspot.jpg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         </div>
                         <div class="p-8">
                             <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-4 py-1.5 rounded-full mb-4 inline-block">Locations</span>
@@ -169,7 +169,7 @@ function renderBlog() {
                     </div>
                     <div class="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 group cursor-pointer">
                         <div class="h-64 bg-gray-200 overflow-hidden relative">
-                            <img src="[https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=800&q=80](https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=800&q=80)" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <img src="images/tentskill.jpeg" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         </div>
                         <div class="p-8">
                             <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-4 py-1.5 rounded-full mb-4 inline-block">Maintenance</span>

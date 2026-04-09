@@ -58,7 +58,7 @@ body {
     transform: scale(1.1) rotate(-2deg); 
 }
 
-/* Custom Scrollbar */
+/* 自定义滚动条 */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #f1f1f1; }
 ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }

@@ -1,5 +1,4 @@
 const products = [
-    // === CAMPING CATEGORY ===
     { id: 1, name: "Apex Pro 4-Person Tent", price: 899, category: "Camping", img: "images/tent.jpg", desc: "Military-grade ripstop fabric with geodesic pole structure.", specs: "Weight: 3.2kg | Waterproof: 5000mm | Capacity: 4 Adults" },
     { id: 3, name: "Summit Thermal Shield", price: 280, category: "Camping", img: "images/heatshield.jpg", desc: "NASA-inspired insulation for sub-zero survival.", specs: "Temp Limit: -15°C | Weight: 1.1kg | Material: Recycled Down" },
     { id: 4, name: "Ti-Lite Survival Stove", price: 120, category: "Camping", img: "images/stove.jpg", desc: "The world's lightest titanium multi-fuel stove.", specs: "Weight: 45g | Boil Time: 3.2min | Fuel: Gas/Liquid" },
@@ -12,13 +11,12 @@ let cart = JSON.parse(localStorage.getItem('apex_cart')) || [];
 let currentSearchQuery = "";
 let currentSort = "default";
 
-// --- NAVIGATION ---
 function showView(view) {
     const main = document.getElementById('main-content');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    // Dynamic Active State
-    const navItems = ['home', 'story'];
+
+    const navItems = ['home', 'story', 'blog'];
     navItems.forEach(item => {
         const el = document.getElementById('nav-' + item);
         if (el) {
@@ -34,6 +32,7 @@ function showView(view) {
     
     if (view === 'home') renderHome();
     else if (view === 'story') renderStory();
+    else if (view === 'blog') renderBlog();
     else if (view === 'checkout') renderCheckout();
     
     lucide.createIcons();
@@ -71,12 +70,10 @@ function handleSearch(val) {
     }
 }
 
-// --- RENDERERS ---
 function renderHome() {
     document.getElementById('main-content').innerHTML = `
         <section class="relative bg-gray-950 h-[700px] flex items-center overflow-hidden animate-view">
-            <!-- 高质量的野外露营、帐篷与森林背景照片 -->
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1504280390467-336c1e345f08?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-40 scale-110"></div>
+            <div class="absolute inset-0 bg-[url('[https://images.unsplash.com/photo-1504280390467-336c1e345f08?auto=format&fit=crop&w=1920&q=80](https://images.unsplash.com/photo-1504280390467-336c1e345f08?auto=format&fit=crop&w=1920&q=80)')] bg-cover bg-center opacity-40 scale-110"></div>
             <div class="max-w-7xl mx-auto px-4 relative z-10 text-white">
                 <div class="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/30 px-5 py-2 rounded-full mb-8 backdrop-blur-md">
                     <span class="text-emerald-400 text-[10px] font-black uppercase tracking-[0.4em]">2026 Collection Live</span>
@@ -96,7 +93,6 @@ function renderHome() {
                     <p class="text-gray-400 font-bold uppercase tracking-widest text-xs">Battle-tested camping gear for global terrains</p>
                 </div>
                 
-                <!-- Sort Dropdown -->
                 <div class="flex items-center gap-3">
                     <i data-lucide="arrow-up-down" class="w-4 h-4 text-gray-400"></i>
                     <select onchange="handleSort(this.value)" class="bg-white border border-gray-200 text-gray-700 text-xs font-bold uppercase tracking-widest rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
@@ -139,11 +135,61 @@ function renderStory() {
     `;
 }
 
+function renderBlog() {
+    document.getElementById('main-content').innerHTML = `
+        <section class="pt-40 pb-32 px-4 bg-[#fafafa] animate-view min-h-screen">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-16">
+                    <span class="text-emerald-600 font-black text-xs uppercase tracking-[0.4em] mb-4 block">Field Notes</span>
+                    <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-6">Survival & Tactics.</h2>
+                    <p class="text-gray-500 font-medium max-w-2xl text-lg">Expert guides, gear maintenance tips, and stories from the absolute edge of the map. Optimizing our SEO reach.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 group cursor-pointer">
+                        <div class="h-64 bg-gray-200 overflow-hidden relative">
+                            <img src="[https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=800&q=80](https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=800&q=80)" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="p-8">
+                            <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-4 py-1.5 rounded-full mb-4 inline-block">Gear Guide</span>
+                            <h3 class="font-bold text-2xl mb-4 tracking-tight text-gray-800">How to Choose a Sub-Zero Sleeping Bag</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed mb-6">Understanding R-values, down fill power, and synthetic alternatives for extreme cold weather survival.</p>
+                            <span class="text-xs font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2 group-hover:gap-4 transition-all">Read Protocol <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 group cursor-pointer">
+                        <div class="h-64 bg-gray-200 overflow-hidden relative">
+                            <img src="[https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800&q=80](https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800&q=80)" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="p-8">
+                            <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-4 py-1.5 rounded-full mb-4 inline-block">Locations</span>
+                            <h3 class="font-bold text-2xl mb-4 tracking-tight text-gray-800">Top 10 Wild Camping Spots</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed mb-6">Discover untouched terrains and off-grid locations that challenge even the most experienced mountaineers.</p>
+                            <span class="text-xs font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2 group-hover:gap-4 transition-all">Read Protocol <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 group cursor-pointer">
+                        <div class="h-64 bg-gray-200 overflow-hidden relative">
+                            <img src="[https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=800&q=80](https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=800&q=80)" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="p-8">
+                            <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-4 py-1.5 rounded-full mb-4 inline-block">Maintenance</span>
+                            <h3 class="font-bold text-2xl mb-4 tracking-tight text-gray-800">Tent Care & Waterproofing 101</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed mb-6">Extend the 25-year lifespan of your Apex geodesic tent with proper post-expedition cleaning and storage.</p>
+                            <span class="text-xs font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2 group-hover:gap-4 transition-all">Read Protocol <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    `;
+    lucide.createIcons();
+}
+
 function renderProductList(list) {
     return list.map(p => `
         <div class="product-card group bg-white rounded-[2.5rem] border border-gray-100 p-8 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-700">
             <div onclick="openProductDetail(${p.id})" class="cursor-pointer aspect-square bg-[#f8f8f8] rounded-[2rem] mb-8 flex items-center justify-center shadow-inner overflow-hidden relative">
-                <img src="${p.img}" alt="${p.name}" class="product-img w-full h-full object-contain p-6 transition-transform duration-700" onerror="this.src='https://via.placeholder.com/400?text=No+Image'">
+                <img src="${p.img}" alt="" class="product-img w-full h-full object-contain p-6 transition-transform duration-700" onerror="this.src='[https://via.placeholder.com/400?text=No+Image](https://via.placeholder.com/400?text=No+Image)'">
                 <div class="absolute inset-0 bg-emerald-600/0 group-hover:bg-emerald-600/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 duration-500">
                     <span class="bg-white text-gray-900 text-[10px] font-black px-6 py-3 rounded-full shadow-xl uppercase tracking-widest">View Details</span>
                 </div>
@@ -158,7 +204,6 @@ function renderProductList(list) {
     `).join('');
 }
 
-// --- CART LOGIC ---
 function toggleCart() {
     const panel = document.getElementById('cart-panel');
     const overlay = document.getElementById('cart-overlay');
@@ -166,7 +211,7 @@ function toggleCart() {
     panel.classList.toggle('translate-x-full');
     overlay.classList.toggle('opacity-0');
     overlay.classList.toggle('pointer-events-none');
-    overlay.classList.toggle('pointer-events-auto'); // 开启背景层的防点击穿透拦截
+    overlay.classList.toggle('pointer-events-auto'); 
     document.body.style.overflow = isClosing ? 'auto' : 'hidden';
 }
 
@@ -204,7 +249,7 @@ function updateCartUI() {
         return `
         <div class="flex items-center gap-6 bg-[#fcfcfc] p-6 rounded-[2rem] border border-gray-100">
             <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-sm overflow-hidden p-2">
-                <img src="${item.img}" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/100'">
+                <img src="${item.img}" class="w-full h-full object-contain" alt="" onerror="this.src='[https://via.placeholder.com/100](https://via.placeholder.com/100)'">
             </div>
             <div class="flex-1">
                 <h4 class="font-black text-sm uppercase tracking-tight">${item.name}</h4>
@@ -228,7 +273,6 @@ function changeQty(id, delta) {
     saveAndSync();
 }
 
-// --- MODAL & LOGIC ---
 function openModal(type, data) {
     const container = document.getElementById('modal-container');
     const content = document.getElementById('modal-content');
@@ -264,7 +308,7 @@ function openProductDetail(id) {
     content.innerHTML = `
         <div class="flex flex-col md:flex-row h-full">
             <div class="md:w-1/2 bg-[#f8f8f8] flex items-center justify-center p-10 md:p-20 min-h-[300px] md:min-h-[500px]">
-                <img src="${p.img}" alt="${p.name}" class="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/600'">
+                <img src="${p.img}" alt="" class="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500" onerror="this.src='[https://via.placeholder.com/600](https://via.placeholder.com/600)'">
             </div>
             <div class="md:w-1/2 p-10 md:p-16 flex flex-col justify-center">
                 <span class="text-emerald-600 font-black text-xs uppercase tracking-widest mb-4 block">${p.category}</span>
@@ -292,7 +336,6 @@ function closeModal() {
     document.body.style.overflow = 'auto';
 }
 
-// --- CHECKOUT ---
 function goToCheckout() { if (cart.length > 0) { toggleCart(); showView('checkout'); } }
 
 function renderCheckout() {
@@ -375,7 +418,6 @@ function simPayment() {
     }, 2500);
 }
 
-// --- INIT ---
 window.onload = () => {
     showView('home');
     window.addEventListener('scroll', () => {

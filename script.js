@@ -7,7 +7,7 @@ const products = [
     { id: 12, name: "Titanium Cookset", price: 195, category: "Camping", img: "images/cookset.jpg", desc: "Ultralight nesting pot and pan set for backcountry gourmets.", specs: "Weight: 220g | Material: Titanium | Includes: 1L Pot, Pan" }
 ];
 
-let cart = JSON.parse(localStorage.getItem('apex_cart')) || [];
+let cart = [];
 let currentSearchQuery = "";
 let currentSort = "default";
 
@@ -279,20 +279,24 @@ function openModal(type, data) {
     container.classList.replace('hidden', 'flex');
     document.body.style.overflow = 'hidden';
 
-    content.className = "relative bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl overflow-hidden animate-view";
-
     if (type === 'login') {
+        content.className = "relative bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl overflow-hidden animate-view";
         content.innerHTML = `
-            <div class="p-12 text-center">
-                <h2 class="text-4xl font-black uppercase tracking-tighter mb-4">Tactical Login</h2>
-                <p class="text-gray-400 text-sm font-bold uppercase tracking-widest mb-10">Access your deployment dashboard</p>
-                <div class="space-y-4">
-                    <input type="email" placeholder="Email Address" class="w-full p-5 bg-gray-50 border-none rounded-2xl font-bold text-sm outline-none focus:ring-2 focus:ring-emerald-500">
-                    <input type="password" placeholder="Password" class="w-full p-5 bg-gray-50 border-none rounded-2xl font-bold text-sm outline-none focus:ring-2 focus:ring-emerald-500">
-                    <button onclick="closeModal()" class="w-full bg-gray-900 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs mt-6 shadow-xl shadow-gray-200">Authenticate</button>
+            <div class="p-10 relative">
+                <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-900 transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+                
+                <div class="flex justify-center gap-8 mb-8 border-b border-gray-100 pb-4">
+                    <button onclick="renderAuthForm('login')" id="tab-login" class="text-sm font-black uppercase tracking-widest text-emerald-600 border-b-2 border-emerald-600 pb-2 transition-all">Log In</button>
+                    <button onclick="renderAuthForm('register')" id="tab-register" class="text-sm font-black uppercase tracking-widest text-gray-400 hover:text-gray-900 pb-2 transition-all">Register</button>
+                </div>
+                
+                <div id="auth-form-container" class="text-center">
+                    ${getLoginFormHTML()}
                 </div>
             </div>
         `;
+    } else if (type === 'product') {
+
     }
     lucide.createIcons();
 }
@@ -418,6 +422,94 @@ function simPayment() {
     }, 2500);
 }
 
+function getLoginFormHTML() {
+    return `
+        <h2 class="text-3xl font-black uppercase tracking-tighter mb-2">Tactical Login</h2>
+        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-8">Access your deployment dashboard</p>
+        <form onsubmit="handleLoginSubmit(event, 'login')" class="space-y-4 text-left">
+            <input type="email" required placeholder="Email Address" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-sm outline-none focus:ring-2 focus:ring-emerald-500 transition">
+            <input type="password" required placeholder="Password" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-sm outline-none focus:ring-2 focus:ring-emerald-500 transition">
+            <button type="submit" class="w-full bg-gray-900 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs mt-4 shadow-xl shadow-gray-200 hover:bg-emerald-600 transition duration-300">Authenticate</button>
+        </form>
+    `;
+}
+
+function getRegisterFormHTML() {
+    return `
+        <h2 class="text-3xl font-black uppercase tracking-tighter mb-2">Enlist Now</h2>
+        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-8">Create your Vanguard Account</p>
+        <form onsubmit="handleLoginSubmit(event, 'register')" class="space-y-4 text-left">
+            <input type="text" id="reg-name" required placeholder="Display Name (e.g. Alex)" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-sm outline-none focus:ring-2 focus:ring-emerald-500 transition">
+            <input type="email" required placeholder="Email Address" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-sm outline-none focus:ring-2 focus:ring-emerald-500 transition">
+            <input type="password" required placeholder="Create Password" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-sm outline-none focus:ring-2 focus:ring-emerald-500 transition">
+            <button type="submit" class="w-full bg-emerald-600 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs mt-4 shadow-xl shadow-emerald-500/20 hover:bg-gray-900 transition duration-300">Register</button>
+        </form>
+    `;
+}
+
+function renderAuthForm(type) {
+    const container = document.getElementById('auth-form-container');
+    const tabLogin = document.getElementById('tab-login');
+    const tabReg = document.getElementById('tab-register');
+
+    if (type === 'login') {
+        tabLogin.className = "text-sm font-black uppercase tracking-widest text-emerald-600 border-b-2 border-emerald-600 pb-2 transition-all";
+        tabReg.className = "text-sm font-black uppercase tracking-widest text-gray-400 hover:text-gray-900 pb-2 transition-all";
+        container.innerHTML = getLoginFormHTML();
+    } else {
+        tabReg.className = "text-sm font-black uppercase tracking-widest text-emerald-600 border-b-2 border-emerald-600 pb-2 transition-all";
+        tabLogin.className = "text-sm font-black uppercase tracking-widest text-gray-400 hover:text-gray-900 pb-2 transition-all";
+        container.innerHTML = getRegisterFormHTML();
+    }
+}
+
+function handleLoginSubmit(event, type) {
+    event.preventDefault(); 
+    
+    let username = "COMMANDER"; 
+    if(type === 'register') {
+        username = document.getElementById('reg-name').value || "COMMANDER";
+    }
+
+    cart = [];
+    saveAndSync();
+    showView('home');
+
+    localStorage.setItem('apex_user', username);
+    closeModal();
+    checkAuthStatus(); 
+    showToast(`<span class="text-emerald-500">System:</span> Welcome back, ${username}`);
+}
+
+function handleLogout() {
+    localStorage.removeItem('apex_user');
+    checkAuthStatus();
+    showToast(`<span class="text-red-500">System:</span> Disconnected`);
+}
+
+function checkAuthStatus() {
+    const user = localStorage.getItem('apex_user');
+    const loginBtn = document.getElementById('login-btn');
+    const profileBtn = document.getElementById('profile-btn');
+    const userGreeting = document.getElementById('user-greeting');
+    
+    if (user && loginBtn && profileBtn) {
+        loginBtn.classList.add('hidden');
+        profileBtn.classList.remove('hidden');
+        if(userGreeting) userGreeting.innerText = user;
+    } else if (loginBtn && profileBtn) {
+        loginBtn.classList.remove('hidden');
+        profileBtn.classList.add('hidden');
+    }
+}
+
+function showToast(htmlMsg) {
+    const toast = document.createElement('div');
+    toast.className = "fixed bottom-10 right-10 z-[200] bg-gray-900 text-white px-8 py-5 rounded-3xl shadow-2xl font-black text-[10px] tracking-widest uppercase animate-view";
+    toast.innerHTML = htmlMsg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+}
 window.onload = () => {
     showView('home');
     window.addEventListener('scroll', () => {

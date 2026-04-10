@@ -39,10 +39,32 @@
                         <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
                         <input type="text" id="product-search" oninput="handleSearch(this.value)" placeholder="Search gear..." class="bg-transparent border-none outline-none text-xs font-bold ml-2 w-24 focus:w-40 transition-all">
                     </div>
-                    
-                    <button onclick="openModal('login')" class="p-2.5 bg-gray-100 hover:bg-emerald-50 rounded-full transition-colors text-gray-600 hover:text-emerald-600">
-                        <i data-lucide="user" class="w-5 h-5"></i>
-                    </button>
+                   
+<div id="auth-container" class="relative">
+    <button id="login-btn" onclick="openModal('login')" class="p-2.5 bg-gray-100 hover:bg-emerald-50 rounded-full transition-colors text-gray-600 hover:text-emerald-600">
+        <i data-lucide="user" class="w-5 h-5"></i>
+    </button>
+
+    <div id="profile-btn" class="hidden group relative">
+        <button class="p-1 pl-4 bg-gray-100 hover:bg-emerald-50 rounded-full transition-colors flex items-center gap-2 border border-gray-200">
+            <span class="text-[10px] font-black uppercase tracking-widest text-emerald-700 max-w-[80px] truncate" id="user-greeting">User</span>
+            <div class="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center text-white shadow-md">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+            </div>
+        </button>
+        <div class="absolute right-0 top-full mt-2 w-56 bg-white rounded-[1.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden z-[100] transform translate-y-2 group-hover:translate-y-0">
+            <div class="p-5 border-b border-gray-50 bg-[#fafafa]">
+                <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest mb-1">Vanguard Member</p>
+                <p class="text-sm font-black text-gray-900 tracking-tight">Active Status</p>
+            </div>
+            <div class="p-2">
+                <button onclick="handleLogout()" class="w-full text-left px-4 py-2.5 text-xs font-bold text-red-500 hover:bg-red-50 rounded-xl transition flex items-center gap-3">
+                    <i data-lucide="log-out" class="w-4 h-4"></i> Disconnect
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
                     <button onclick="toggleCart()" class="group relative flex items-center gap-2 bg-gray-900 hover:bg-emerald-600 px-5 py-2.5 rounded-full transition-all duration-300 shadow-xl shadow-gray-200">
                         <i data-lucide="shopping-bag" class="w-4 h-4 text-white"></i>

@@ -484,7 +484,7 @@ function handleLoginSubmit(event, type) {
 function handleLogout() {
     localStorage.removeItem('apex_user');
     checkAuthStatus();
-    showToast(`<span class="text-red-500">System:</span>Log Out Successful`);
+    showToast(`<span class="text-red-500">System:</span> Log Out Successful`);
 }
 
 function checkAuthStatus() {
@@ -535,7 +535,6 @@ function renderCheckout() {
                         <input type="email" placeholder="Email Address" class="w-full mt-4 p-5 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-emerald-500 font-bold text-sm">
                         <textarea placeholder="Full Shipping Address" rows="3" class="w-full mt-4 p-5 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-emerald-500 font-bold text-sm"></textarea>
                     </div>
-                    
                     <div class="bg-white p-10 rounded-[3rem] border border-gray-100 shadow-sm">
                         <h3 class="font-black text-sm uppercase tracking-[0.3em] text-emerald-600 mb-8">02. Payment Method</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -557,8 +556,7 @@ function renderCheckout() {
                         </div>
                     </div>
                 </div>
-                
-                <!-- 订单总结 -->
+
                 <div class="bg-gray-950 text-white p-12 rounded-[4rem] h-fit sticky top-40 shadow-2xl">
                     <h3 class="font-black text-2xl mb-10 uppercase tracking-tight">Mission Summary</h3>
                     <div class="space-y-6 mb-12">

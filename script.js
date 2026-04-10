@@ -484,7 +484,7 @@ function handleLoginSubmit(event, type) {
 function handleLogout() {
     localStorage.removeItem('apex_user');
     checkAuthStatus();
-    showToast(`<span class="text-red-500">System:</span> Log Out Successful`);
+    showToast(`<span class="text-red-500">System:</span>Log Out Successful`);
 }
 
 function checkAuthStatus() {

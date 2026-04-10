@@ -510,6 +510,117 @@ function showToast(htmlMsg) {
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 2500);
 }
+// === 结账页面与付款方式 (CHECKOUT & PAYMENTS) ===
+function goToCheckout() { 
+    if (cart.length > 0) { 
+        toggleCart(); 
+        showView('checkout'); 
+    } 
+}
+
+function renderCheckout() {
+    const total = cart.reduce((a,b) => a + (b.price * b.quantity), 0);
+    document.getElementById('main-content').innerHTML = `
+        <div class="max-w-6xl mx-auto px-4 py-40 animate-view">
+            <h2 class="text-6xl font-black uppercase mb-16 tracking-tighter">Gear Deployment</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                <div class="space-y-8">
+                    <!-- 收货地址 -->
+                    <div class="bg-white p-10 rounded-[3rem] border border-gray-100 shadow-sm">
+                        <h3 class="font-black text-sm uppercase tracking-[0.3em] text-emerald-600 mb-8">01. Delivery Coordinates</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" id="fname" placeholder="First Name" class="p-5 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-emerald-500 font-bold text-sm">
+                            <input type="text" id="lname" placeholder="Last Name" class="p-5 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-emerald-500 font-bold text-sm">
+                        </div>
+                        <input type="email" placeholder="Email Address" class="w-full mt-4 p-5 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-emerald-500 font-bold text-sm">
+                        <textarea placeholder="Full Shipping Address" rows="3" class="w-full mt-4 p-5 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-emerald-500 font-bold text-sm"></textarea>
+                    </div>
+                    
+                    <!-- 付款方式 (Payment Method) -->
+                    <div class="bg-white p-10 rounded-[3rem] border border-gray-100 shadow-sm">
+                        <h3 class="font-black text-sm uppercase tracking-[0.3em] text-emerald-600 mb-8">02. Payment Method</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <button type="button" onclick="selectPayment(this)" class="payment-btn flex flex-col items-center justify-center border-2 border-emerald-500 p-6 rounded-3xl bg-emerald-50 text-emerald-700 font-black uppercase text-[10px] tracking-widest gap-3 transition-all relative">
+                                <i data-lucide="credit-card" class="w-6 h-6"></i>
+                                <span>Credit Card</span>
+                                <i data-lucide="check-circle" class="w-4 h-4 absolute top-4 right-4 text-emerald-500 select-icon"></i>
+                            </button>
+                            <button type="button" onclick="selectPayment(this)" class="payment-btn flex flex-col items-center justify-center border-2 border-gray-100 p-6 rounded-3xl hover:bg-gray-50 text-gray-400 hover:text-emerald-600 font-black uppercase text-[10px] tracking-widest gap-3 transition-all relative">
+                                <i data-lucide="smartphone" class="w-6 h-6"></i>
+                                <span>TNG eWallet</span>
+                                <i data-lucide="circle" class="w-4 h-4 absolute top-4 right-4 select-icon"></i>
+                            </button>
+                            <button type="button" onclick="selectPayment(this)" class="payment-btn flex flex-col items-center justify-center border-2 border-gray-100 p-6 rounded-3xl hover:bg-gray-50 text-gray-400 hover:text-emerald-600 font-black uppercase text-[10px] tracking-widest gap-3 transition-all relative">
+                                <i data-lucide="building-2" class="w-6 h-6"></i>
+                                <span>Online Banking</span>
+                                <i data-lucide="circle" class="w-4 h-4 absolute top-4 right-4 select-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 订单总结 -->
+                <div class="bg-gray-950 text-white p-12 rounded-[4rem] h-fit sticky top-40 shadow-2xl">
+                    <h3 class="font-black text-2xl mb-10 uppercase tracking-tight">Mission Summary</h3>
+                    <div class="space-y-6 mb-12">
+                        ${cart.map(i => `<div class="flex justify-between font-bold text-sm"><span class="text-gray-500">${i.name} ×${i.quantity}</span><span>RM ${i.price * i.quantity}</span></div>`).join('')}
+                    </div>
+                    <div class="border-t border-gray-800 pt-10">
+                        <div class="flex justify-between items-end">
+                            <span class="text-xs font-black text-emerald-500 tracking-[0.4em] uppercase">Deployment Total</span>
+                            <span class="text-5xl font-black text-white tracking-tighter">RM ${total.toFixed(2)}</span>
+                        </div>
+                        <button id="pay-btn" onclick="simPayment()" class="w-full bg-emerald-500 text-gray-950 py-6 rounded-[2rem] font-black uppercase text-xs tracking-widest mt-12 transition-all hover:scale-[1.02] shadow-xl shadow-emerald-500/20">Authorize Transaction</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    lucide.createIcons();
+}
+
+function selectPayment(clickedBtn) {
+    const buttons = document.querySelectorAll('.payment-btn');
+    buttons.forEach(btn => {
+        btn.className = "payment-btn flex flex-col items-center justify-center border-2 border-gray-100 p-6 rounded-3xl hover:bg-gray-50 text-gray-400 hover:text-emerald-600 font-black uppercase text-[10px] tracking-widest gap-3 transition-all relative";
+        btn.querySelector('.select-icon').setAttribute('data-lucide', 'circle');
+        btn.querySelector('.select-icon').classList.remove('text-emerald-500');
+    });
+    
+    clickedBtn.className = "payment-btn flex flex-col items-center justify-center border-2 border-emerald-500 p-6 rounded-3xl bg-emerald-50 text-emerald-700 font-black uppercase text-[10px] tracking-widest gap-3 transition-all relative";
+    clickedBtn.querySelector('.select-icon').setAttribute('data-lucide', 'check-circle');
+    clickedBtn.querySelector('.select-icon').classList.add('text-emerald-500');
+    lucide.createIcons();
+}
+
+function simPayment() {
+    const btn = document.getElementById('pay-btn');
+    const fname = document.getElementById('fname').value;
+    if(!fname) {
+        showToast(`<span class="text-red-400">Error:</span> Please enter deployment details first.`);
+        return;
+    }
+    btn.innerHTML = `<i data-lucide="loader-2" class="w-5 h-5 animate-spin mx-auto"></i>`;
+    lucide.createIcons();
+    setTimeout(() => {
+        cart = [];
+        saveAndSync();
+        document.getElementById('main-content').innerHTML = `
+            <div class="max-w-2xl mx-auto px-4 py-48 text-center animate-view">
+                <div class="w-32 h-32 bg-emerald-500 text-gray-950 rounded-[3rem] flex items-center justify-center mx-auto mb-12 shadow-2xl shadow-emerald-500/30">
+                    <i data-lucide="check" class="w-16 h-16"></i>
+                </div>
+                <h2 class="text-6xl font-black uppercase mb-6 tracking-tighter">Payment Confirmed!</h2>
+                <p class="text-gray-500 font-bold mb-12 text-lg uppercase tracking-widest">Order ID: #APX-${Math.floor(Math.random()*90000)+10000}</p>
+                <div class="bg-gray-100 p-8 rounded-[2.5rem] border border-gray-200 text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mb-12">
+                    This is a prototype simulation. No funds were removed and no gear will be shipped.
+                </div>
+                <button onclick="showView('home')" class="bg-gray-900 text-white px-12 py-6 rounded-3xl font-black uppercase text-xs tracking-widest hover:bg-emerald-600 transition">Return Base</button>
+            </div>
+        `;
+        lucide.createIcons();
+    }, 2500);
+}
 window.onload = () => {
     showView('home');
     window.addEventListener('scroll', () => {

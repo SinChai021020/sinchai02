@@ -484,7 +484,7 @@ function handleLoginSubmit(event, type) {
 function handleLogout() {
     localStorage.removeItem('apex_user');
     checkAuthStatus();
-    showToast(`<span class="text-red-500">System:</span> Disconnected`);
+    showToast(`<span class="text-red-500">System:</span> Log Out Successful`);
 }
 
 function checkAuthStatus() {
@@ -510,7 +510,7 @@ function showToast(htmlMsg) {
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 2500);
 }
-// === 结账页面与付款方式 (CHECKOUT & PAYMENTS) ===
+
 function goToCheckout() { 
     if (cart.length > 0) { 
         toggleCart(); 
@@ -536,7 +536,6 @@ function renderCheckout() {
                         <textarea placeholder="Full Shipping Address" rows="3" class="w-full mt-4 p-5 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-emerald-500 font-bold text-sm"></textarea>
                     </div>
                     
-                    <!-- 付款方式 (Payment Method) -->
                     <div class="bg-white p-10 rounded-[3rem] border border-gray-100 shadow-sm">
                         <h3 class="font-black text-sm uppercase tracking-[0.3em] text-emerald-600 mb-8">02. Payment Method</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
